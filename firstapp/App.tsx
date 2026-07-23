@@ -3,7 +3,7 @@ import { StyleSheet, Text, View,TextInput, Button} from 'react-native';
 
 export default function App() {
   return (
-    <View style={styles.container}>
+    <View style={styles.welcomeTxt}>
       <Text>Welcome to my app!</Text>
       <Text>Enter your name</Text>
       <TextInput placeholder="Greta" />
@@ -16,10 +16,12 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+  welcomeTxt: {
+    paddingTop: 50, 
+    color: "purple",
+    fontWeight: "bold",
+    fontSize: 30,
+    textAlign: "center",
+
   },
 });
