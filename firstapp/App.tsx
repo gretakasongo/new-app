@@ -4,12 +4,14 @@ import { StyleSheet, Text, View,TextInput, Button, Image} from 'react-native';
 export default function App() {
   return (
     <View>
-      <Image style={styles.mainImg}source={require("./images/VSCode.png")}  />
+      <Image style={styles.mainImg} source={require('./assets/Images/VSCode.jpg')} />
       <Text style={styles.welcomeTxt}> Welcome to my app!</Text>
-      <Text style={styles.headingTxt}>Enter your name</Text>
-      <TextInput style={styles.inputBoxTxt} placeholder="Greta" />
-      <Text style={styles.headingTxt}>Enter your surname</Text>
-      <TextInput style={styles.inputBoxTxt} placeholder="Kasongo" />
+      <View style={styles.inputFlex}>
+        <Text style={styles.headingTxt}>Enter your name</Text>
+        <TextInput style={styles.inputBoxTxt} placeholder="Greta" />
+        <Text style={styles.headingTxt}>Enter your surname</Text>
+        <TextInput style={styles.inputBoxTxt} placeholder="Kasongo" />
+      </View>
       <Button title="Add User" />
       <StatusBar style="auto" />
     </View>
@@ -37,9 +39,13 @@ const styles = StyleSheet.create({
     paddingTop: 50,
     justifyContent: "center",
     alignItems: "center",
-    width: 250,
-    height: 250,
+    width: 150,
+    height: 150,
 
+  },
+  inputFlex: {
+    flexDirection: "column",
+    margin: 10,
   }
  
 });
