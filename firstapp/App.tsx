@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
-import { useState } from 'react';
-import { StyleSheet, Text, View,TextInput, Button, Image} from 'react-native';
+import { useState,useRef,useEffect, ReactNode } from 'react';
+import { StyleSheet, Text, View,TextInput, Button, Image,SafeAreaView,ScrollView, Animated,ViewStyle,StyleProp} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
@@ -40,6 +40,9 @@ function MainScreen() {
 
 return(
    <View>
+    <SafeAreaView>
+      <ScrollView>
+      
       <Image style={styles.mainImg} source={require('./assets/Images/VSCode.jpg')} />
       <Text style={styles.welcomeTxt}> Welcome to my app!</Text>
       <View style={styles.inputFlex}>
@@ -56,6 +59,8 @@ return(
          "Surname:"+ Surname);
          }} />
       <StatusBar style="auto" />
+      </ScrollView>
+      </SafeAreaView>
     </View>)}
 
 function ViewDetails({ navigation,route }: ViewDetailsProps) {
@@ -68,7 +73,37 @@ function ViewDetails({ navigation,route }: ViewDetailsProps) {
       <Text>Surname: {SurnameGet}</Text>
     </View>
   );
+};
+
+interface FadeInterviewProps {
+  children: ReactNode;
+  style?: StyleProp<ViewStyle>;
 }
+
+const FadeInView = (children: ReactNode, style: FadeInterviewProps) =>{
+  const fadeAnim = useRef(new Animated.Value(0)).current
+
+  useEffect(() => {
+    Animated.timing(
+      fadeAnim,
+      {
+      toValue: 1,
+      duration: 4000,
+      useNativeDriver: false
+    }
+  ).start();
+  },[fadeAnim])
+
+  return(
+    <Animated.View style={{
+      ...(style as object),
+      opacity: fadeAnim,
+    }}>
+      {children}
+    </Animated.View>
+  );
+};
+
 
 const styles = StyleSheet.create({
   welcomeTxt: {
