@@ -3,34 +3,40 @@ import { useState } from 'react';
 import { StyleSheet, Text, View,TextInput, Button, Image} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 
-export default function App() {
-  const Stack = createNativeStackNavigator();
-  return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        
-        <Stack.Screen name="Home" component={MainScreen} />
 
-      </Stack.Navigator>
-    </NavigationContainer>
-  );
-}
+  type RootStackParamList = {
+    Home: undefined,
+    View: {
+      NameSend: string;
+      SurnameSend: string;
+    };
+  };
+
+  const Stack = createNativeStackNavigator<RootStackParamList>();
+
+  type MainSreenProps = NativeStackScreenProps<RootStackParamList, 'Home'>;
+  type ViewDetailsProps = NativeStackScreenProps<RootStackParamList, 'View'>;
+  
+  export default function App() {
+    return(
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen name="Home" component={MainScreen} />
+          <Stack.Screen name="View" component={ViewDetails} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    );
+  }
+
 function MainScreen() {
   const [Name, setName] = useState('');
-  const [Surname, setSurname] = useState('');
+  const [Surname, setSurname] = useState(''); 
 
-  const handleNameChange = (text: string) => {
-    const cleandText = text.replace(/[^a-zA-Z]/g, '');
-    setName(cleandText);
-  }
+  console.log("EBAA");
 
-  const handleSurnameChange = (text: string) => {
-    const cleanedText = text.replace(/[^a-zA-Z]/g, '');
-    setSurname(cleanedText);
-  }
-  console.log("App works");
 
 return(
    <View>
@@ -51,6 +57,18 @@ return(
          }} />
       <StatusBar style="auto" />
     </View>)}
+
+function ViewDetails({ navigation,route }: ViewDetailsProps) {
+  const NameGet = route.params.NameSend;
+  const SurnameGet = route.params.SurnameSend;
+  
+  return(
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <Text>Name: {NameGet}</Text>
+      <Text>Surname: {SurnameGet}</Text>
+    </View>
+  );
+}
 
 const styles = StyleSheet.create({
   welcomeTxt: {
