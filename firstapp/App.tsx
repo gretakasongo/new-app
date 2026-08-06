@@ -35,7 +35,7 @@ function MainScreen({ navigation }: MainScreenProps) {
 
   const [Name, setName] = useState('');
   const [Surname, setSurname] = useState('');
-  const [Error, setError] = useState('');
+  const [Error, setError] = useState(false);
 
   console.log("App works");
 
@@ -50,8 +50,8 @@ function MainScreen({ navigation }: MainScreenProps) {
       
     <FadeInView>
 
-      <Text style={styles.redTxt}>{Error}</Text>
-      
+      <Text style={Error? styles.redTxt: styles.Blank}>{Error?"PLease enter your info":""}</Text>
+
       <View style={styles.inputFlex}>
         <Text style={styles.headingTxt}>Enter your name</Text>
         <TextInput style={styles.inputBoxTxt} placeholder="Greta"
@@ -71,10 +71,10 @@ function MainScreen({ navigation }: MainScreenProps) {
           NameSend: Name,
           SurnameSend: Surname,
         });
-        setError('');
+        setError(false);
       }
       else{
-        setError('Fields are empty!');
+        setError(true);
       }
       }}/>
       
@@ -168,6 +168,10 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 30,
     textAlign: "center",
+  },
+
+  Blank: {
+    fontSize: 0,
   }
  
 });
