@@ -17,7 +17,7 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
   const Stack = createNativeStackNavigator<RootStackParamList>();
 
-  type MainSreenProps = NativeStackScreenProps<RootStackParamList, 'Home'>;
+  type MainScreenProps = NativeStackScreenProps<RootStackParamList, 'Home'>;
   type ViewDetailsProps = NativeStackScreenProps<RootStackParamList, 'View'>;
   
   export default function App() {
@@ -31,39 +31,62 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
     );
   }
 
-function MainScreen() {
+function MainScreen({ navigation }: MainScreenProps) {
+
   const [Name, setName] = useState('');
-  const [Surname, setSurname] = useState(''); 
+  const [Surname, setSurname] = useState('');
+  const [Error, setError] = useState('');
 
-  console.log("EBAA");
+  console.log("App works");
 
-
-return(
+  return(
    <View>
     <SafeAreaView>
       <ScrollView>
       
       <Image style={styles.mainImg} source={require('./assets/Images/VSCode.jpg')} />
+
       <Text style={styles.welcomeTxt}> Welcome to my app!</Text>
+      
+    <FadeInView>
+
+      <Text style={styles.redTxt}>{Error}</Text>
+      
       <View style={styles.inputFlex}>
         <Text style={styles.headingTxt}>Enter your name</Text>
         <TextInput style={styles.inputBoxTxt} placeholder="Greta"
         onChangeText={newText => setName(newText)} />
+
         <Text style={styles.headingTxt}>Enter your surname</Text>
         <TextInput style={styles.inputBoxTxt} placeholder="Kasongo"
         onChangeText={newText => setSurname(newText)} />
       </View>
+    </FadeInView>  
+
       <Button title="Add User"
        onPress={() => {
-         console.log("Name:"+ Name +
-         "Surname:"+ Surname);
-         }} />
-      <StatusBar style="auto" />
+
+        if(isEmpty(Name) ==(false) && isEmpty(Surname) ==(false)){
+        navigation.navigate('View', {
+          NameSend: Name,
+          SurnameSend: Surname,
+        });
+        setError('');
+      }
+      else{
+        setError('Fields are empty!');
+      }
+      }}/>
+      
+    <StatusBar style="auto" />
       </ScrollView>
       </SafeAreaView>
-    </View>)}
+    </View>
+    );
+  }
 
-function ViewDetails({ navigation,route }: ViewDetailsProps) {
+function ViewDetails({ navigation,route }: ViewDetailsProps){
+  
   const NameGet = route.params.NameSend;
   const SurnameGet = route.params.SurnameSend;
   
@@ -75,30 +98,35 @@ function ViewDetails({ navigation,route }: ViewDetailsProps) {
   );
 };
 
+function isEmpty(value: any){
+  return(
+    (value === null) ||
+    (value.hasOwnProperty('length') && value.length === 0) ||
+    (value.constructor === Object && Object.keys(value).length === 0)
+  )
+}
+
 interface FadeInterviewProps {
   children: ReactNode;
   style?: StyleProp<ViewStyle>;
 }
 
-const FadeInView = (children: ReactNode, style: FadeInterviewProps) =>{
+const FadeInView = ({ children, style }: FadeInterviewProps) =>{
   const fadeAnim = useRef(new Animated.Value(0)).current
 
   useEffect(() => {
-    Animated.timing(
-      fadeAnim,
-      {
+    Animated.timing(fadeAnim, {
       toValue: 1,
       duration: 4000,
-      useNativeDriver: false
-    }
-  ).start();
+      useNativeDriver: false,
+    }).start();
   },[fadeAnim])
 
   return(
-    <Animated.View style={{
-      ...(style as object),
-      opacity: fadeAnim,
-    }}>
+    <Animated.View style={[
+      style,
+      { opacity: fadeAnim },
+    ]}>
       {children}
     </Animated.View>
   );
@@ -133,6 +161,13 @@ const styles = StyleSheet.create({
   inputFlex: {
     justifyContent: "space-evenly",
     marginTop: 20,
+  },
+
+  redTxt: {
+    color: "red",
+    fontWeight: "bold",
+    fontSize: 30,
+    textAlign: "center",
   }
  
 });
