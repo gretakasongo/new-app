@@ -50,7 +50,7 @@ function MainScreen({ navigation }: MainScreenProps) {
       
     <FadeInView>
 
-      <Text style={Error? styles.redTxt: styles.Blank}>{Error?"PLease enter your info":""}</Text>
+      <Text style={Error? styles.redTxt: styles.Blank}>{Error?"Please enter your info":""}</Text>
 
       <View style={styles.inputFlex}>
         <Text style={styles.headingTxt}>Enter your name</Text>
