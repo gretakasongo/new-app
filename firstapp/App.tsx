@@ -97,8 +97,7 @@ function ViewDetails({ navigation,route }: ViewDetailsProps){
       <View style={{ flex: 0, alignItems: 'center', justifyContent: 'center' }}>
       <Text style={{fontWeight: "bold", fontSize: 30}}>Welcome {NameGet} {SurnameGet}</Text>
       <Text> Please choose a language </Text>
-      
-
+    
       </View>
     </View>
   );
