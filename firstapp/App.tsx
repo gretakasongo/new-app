@@ -96,6 +96,7 @@ function ViewDetails({ navigation,route }: ViewDetailsProps){
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
       <View style={{ flex: 0, alignItems: 'center', justifyContent: 'center' }}>
       <Text style={{fontWeight: "bold", fontSize: 30}}>Welcome {NameGet} {SurnameGet}</Text>
+      <Text> Please choose a language </Text>
       
 
       </View>
@@ -181,7 +182,7 @@ const styles = StyleSheet.create({
 
   radioContainer: {
     flex: 0,
-    backgroundColor: "#e60073",
+    backgroundColor: "#f8c7de",
     justifyContent: "center",
     alignItems: "center",
   },
@@ -194,7 +195,22 @@ const styles = StyleSheet.create({
   radioLabel: {
     marginLeft: 5,
     fontSize: 16,
-    color: "#ffffff",
+    color: "#0d0d0d",
+  },
+
+  radioGroup: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-around",
+    marginTop: 20,
+    borderRadius: 10,
+    backgroundColor: "White",
+    padding: 10,
+    elevation: 5,
+    shadowColor: "#484848",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 3,
   }
  
 });
