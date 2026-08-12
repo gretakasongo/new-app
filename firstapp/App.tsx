@@ -103,7 +103,7 @@ function ViewDetails({ navigation,route }: ViewDetailsProps){
         <View style={styles.radioGroup}>
          
           <View style={styles.radioButton}>
-            <RadioButton.Android 
+            <RadioButton.IOS 
              value="1"
              status={selectedValue == "1" ? 'checked' : 'unchecked'}
              onPress={() => setSelectedValue("1")}
@@ -112,26 +112,24 @@ function ViewDetails({ navigation,route }: ViewDetailsProps){
             />
             <Text style={styles.radioLabel} >React Native</Text>
 
-          </View> <View style={styles.radioButton}>
-            <RadioButton.Android 
-             value="1"
-             status={selectedValue == "1" ? 'checked' : 'unchecked'}
-             onPress={() => setSelectedValue("2")}
-             color="#ff66ff"
-             
-            />
-            <Text style={styles.radioLabel} >Kotlin</Text>
-
-          </View> <View style={styles.radioButton}>
-            <RadioButton.Android 
-             value="1"
-             status={selectedValue == "1" ? 'checked' : 'unchecked'}
-             onPress={() => setSelectedValue("3")}
-             color="#ff66ff"
-             
-            />
-            <Text style={styles.radioLabel} >HTML & CSS</Text>
-
+          </View> 
+           <View style={styles.radioButton}>
+             <RadioButton.IOS 
+               value="2"
+               status={selectedValue == "2" ? 'checked' : 'unchecked'}
+               onPress={() => setSelectedValue("2")}
+               color="#ff66ff"
+              />
+              <Text style={styles.radioLabel} >Kotlin</Text>
+          </View> 
+           <View style={styles.radioButton}>
+              <RadioButton.IOS 
+               value="3"
+               status={selectedValue == "3" ? 'checked' : 'unchecked'}
+               onPress={() => setSelectedValue("3")}
+               color="#ff66ff" 
+              />
+              <Text style={styles.radioLabel} >HTML & CSS</Text>
           </View>
         </View>
       </View>
