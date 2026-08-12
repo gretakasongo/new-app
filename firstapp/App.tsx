@@ -4,6 +4,7 @@ import { StyleSheet, Text, View,TextInput, Button, Image,SafeAreaView,ScrollView
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import {RadioButton} from 'react-native-paper'
 
 
 
@@ -89,14 +90,18 @@ function ViewDetails({ navigation,route }: ViewDetailsProps){
   
   const NameGet = route.params.NameSend;
   const SurnameGet = route.params.SurnameSend;
+  const [selectedValue, setSelectedValue] = useState('0');
   
   return(
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>Name: {NameGet}</Text>
-      <Text>Surname: {SurnameGet}</Text>
+      <View style={{ flex: 0, alignItems: 'center', justifyContent: 'center' }}>
+      <Text style={{fontWeight: "bold", fontSize: 30}}>Welcome {NameGet} {SurnameGet}</Text>
+      
+
+      </View>
     </View>
   );
-};
+}
 
 function isEmpty(value: any){
   return(
@@ -172,6 +177,24 @@ const styles = StyleSheet.create({
 
   Blank: {
     fontSize: 0,
+  },
+
+  radioContainer: {
+    flex: 0,
+    backgroundColor: "#e60073",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+
+  radioButton: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+
+  radioLabel: {
+    marginLeft: 5,
+    fontSize: 16,
+    color: "#ffffff",
   }
  
 });
