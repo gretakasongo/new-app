@@ -95,10 +95,47 @@ function ViewDetails({ navigation,route }: ViewDetailsProps){
   return(
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
       <View style={{ flex: 0, alignItems: 'center', justifyContent: 'center' }}>
-      <Text style={{fontWeight: "bold", fontSize: 30}}>Welcome {NameGet} {SurnameGet}</Text>
-      <Text> Please choose a language </Text>
-    
+        <Text style={{fontWeight: "bold", fontSize: 30}}>Welcome {NameGet} {SurnameGet}</Text>
+        <Text> Please choose a language </Text>
       </View>
+
+      <View style={styles.radioContainer}>
+        <View style={styles.radioGroup}>
+         
+          <View style={styles.radioButton}>
+            <RadioButton.Android 
+             value="1"
+             status={selectedValue == "1" ? 'checked' : 'unchecked'}
+             onPress={() => setSelectedValue("1")}
+             color="#ff66ff"
+             
+            />
+            <Text style={styles.radioLabel} >React Native</Text>
+
+          </View> <View style={styles.radioButton}>
+            <RadioButton.Android 
+             value="1"
+             status={selectedValue == "1" ? 'checked' : 'unchecked'}
+             onPress={() => setSelectedValue("2")}
+             color="#ff66ff"
+             
+            />
+            <Text style={styles.radioLabel} >Kotlin</Text>
+
+          </View> <View style={styles.radioButton}>
+            <RadioButton.Android 
+             value="1"
+             status={selectedValue == "1" ? 'checked' : 'unchecked'}
+             onPress={() => setSelectedValue("3")}
+             color="#ff66ff"
+             
+            />
+            <Text style={styles.radioLabel} >HTML & CSS</Text>
+
+          </View>
+        </View>
+      </View>
+
     </View>
   );
 }
