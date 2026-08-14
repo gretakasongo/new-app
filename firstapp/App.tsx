@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import { useState,useRef,useEffect, ReactNode } from 'react';
-import { StyleSheet, Text, View,TextInput, Button, Image,SafeAreaView,ScrollView, Animated,ViewStyle,StyleProp} from 'react-native';
+import { StyleSheet, Text, View,TextInput, Button,TouchableOpacity, Image,SafeAreaView,ScrollView, Animated,ViewStyle,StyleProp} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
@@ -45,7 +45,7 @@ function MainScreen({ navigation }: MainScreenProps) {
     <SafeAreaView>
       <ScrollView>
       
-      <Image style={styles.mainImg} source={require('./assets/Images/VSCode.jpg')} />
+      <Image style={styles.mainImg} source={require('./assets/Images/SpiderEyes.jpg')} />
 
       <Text style={styles.welcomeTxt}> Welcome to my app!</Text>
       
@@ -62,11 +62,10 @@ function MainScreen({ navigation }: MainScreenProps) {
         <TextInput style={styles.inputBoxTxt} placeholder="Kasongo"
         onChangeText={newText => setSurname(newText)} />
       </View>
-    </FadeInView>  
-
-      <Button title="Add User"
-       onPress={() => {
-
+    </FadeInView>
+      <TouchableOpacity
+      style={styles.customButton}
+      onPress={() => { 
         if(isEmpty(Name) ==(false) && isEmpty(Surname) ==(false)){
         navigation.navigate('View', {
           NameSend: Name,
@@ -77,7 +76,10 @@ function MainScreen({ navigation }: MainScreenProps) {
       else{
         setError(true);
       }
-      }}/>
+      }}
+      >
+        <Text style={styles.customButtonText}>Add User</Text>
+      </TouchableOpacity>
       
     <StatusBar style="auto" />
       </ScrollView>
@@ -95,7 +97,7 @@ function ViewDetails({ navigation,route }: ViewDetailsProps){
   return(
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
       <View style={{ flex: 0, alignItems: 'center', justifyContent: 'center' }}>
-        <Text style={{fontWeight: "bold", fontSize: 30}}>Welcome {NameGet} {SurnameGet}</Text>
+        <Text style={{fontWeight: "bold", fontSize: 30, textAlign: "center"}}>Welcome {NameGet} {SurnameGet}</Text>
         <Text> Please choose a language </Text>
       </View>
 
@@ -107,7 +109,7 @@ function ViewDetails({ navigation,route }: ViewDetailsProps){
              value="1"
              status={selectedValue == "1" ? 'checked' : 'unchecked'}
              onPress={() => setSelectedValue("1")}
-             color="#ff66ff"
+             color="#ffffff"
              
             />
             <Text style={styles.radioLabel} >React Native</Text>
@@ -118,7 +120,7 @@ function ViewDetails({ navigation,route }: ViewDetailsProps){
                value="2"
                status={selectedValue == "2" ? 'checked' : 'unchecked'}
                onPress={() => setSelectedValue("2")}
-               color="#ff66ff"
+               color="#ffffff"
               />
               <Text style={styles.radioLabel} >Kotlin</Text>
           </View> 
@@ -127,7 +129,7 @@ function ViewDetails({ navigation,route }: ViewDetailsProps){
                value="3"
                status={selectedValue == "3" ? 'checked' : 'unchecked'}
                onPress={() => setSelectedValue("3")}
-               color="#ff66ff" 
+               color="#ffffff" 
               />
               <Text style={styles.radioLabel} >HTML & CSS</Text>
           </View>
@@ -176,9 +178,9 @@ const FadeInView = ({ children, style }: FadeInterviewProps) =>{
 const styles = StyleSheet.create({
   welcomeTxt: {
     paddingTop: 50,
-    color: "purple",
+    color: "#1a1a1a",
     fontWeight: "bold",
-    fontSize: 30,
+    fontSize: 35,
     textAlign: "center",
   },
   headingTxt: {
@@ -186,16 +188,16 @@ const styles = StyleSheet.create({
   },
   inputBoxTxt: {
     borderWidth: 1,
-    borderColor: "black",
+    borderColor: "#1a1a1a",
     padding: 10,
     margin: 10,
   },
   mainImg: {
-    paddingTop: 50,
-    justifyContent: "center",
-    alignItems: "center",
-    width: 150,
-    height: 150,
+    width: "100%",
+    height: 220,
+    resizeMode: "cover",
+    alignSelf: "center",
+    marginTop: 0,
 
   },
   inputFlex: {
@@ -215,10 +217,10 @@ const styles = StyleSheet.create({
   },
 
   radioContainer: {
-    flex: 0,
-    backgroundColor: "#f8c7de",
-    justifyContent: "center",
+   justifyContent: "center",
     alignItems: "center",
+    width: "100%",
+    paddingHorizontal: 15,
   },
 
   radioButton: {
@@ -227,24 +229,49 @@ const styles = StyleSheet.create({
   },
 
   radioLabel: {
-    marginLeft: 5,
-    fontSize: 16,
-    color: "#0d0d0d",
+    marginLeft: 4,
+    fontSize: 13,
+    fontWeight: "600",
+    color: "#ffffff",
   },
 
   radioGroup: {
+    width: "100%",
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-around",
-    marginTop: 20,
-    borderRadius: 10,
-    backgroundColor: "White",
-    padding: 10,
+    backgroundColor: "#111111",
+    borderRadius: 16,
+    paddingVertical: 15,
+    paddingHorizontal: 5,
     elevation: 5,
-    shadowColor: "#484848",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
+  },
+  customButton: {
+    backgroundColor: "#111111",
+    paddingVertical: 14,
+    borderRadius: 12,
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop:25,
+    marginBottom: 30,
+    alignSelf: "center",
+    width: "70%",
+    elevation:3,
+    shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.25,
+    shadowOpacity: 0.3,
     shadowRadius: 3,
-  }
+  },
+  customButtonText: {
+    color: "#ffffff",
+    fontSize: 18,
+    fontWeight: "bold",
+    textAlign: "center",
+    zIndex: 1,
+  },
  
 });
