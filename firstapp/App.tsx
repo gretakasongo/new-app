@@ -1,10 +1,11 @@
 import { StatusBar } from 'expo-status-bar';
 import { useState,useRef,useEffect, ReactNode } from 'react';
-import { StyleSheet, Text, View,TextInput, Button,TouchableOpacity, Image,SafeAreaView,ScrollView, Animated,ViewStyle,StyleProp} from 'react-native';
+import { StyleSheet, Text, View,TextInput, Button,TouchableOpacity, Image,SafeAreaView,ScrollView, Animated,ViewStyle,StyleProp, Pressable} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import {RadioButton} from 'react-native-paper'
+import {Easing} from 'react-native';
 
 
 
@@ -87,7 +88,8 @@ function MainScreen({ navigation }: MainScreenProps) {
     </View>
     );
   }
-
+  
+  
 function ViewDetails({ navigation,route }: ViewDetailsProps){
   
   const NameGet = route.params.NameSend;
@@ -173,8 +175,59 @@ const FadeInView = ({ children, style }: FadeInterviewProps) =>{
     </Animated.View>
   );
 };
+export function SlideIn({ children }: { children: ReactNode }) {
+  const t = useRef(new Animated.Value(40)).current;
+  const o = useRef(new Animated.Value(0)).current;
 
+  useEffect(() => {
+    Animated.parallel([
+      Animated.timing(t, {
+        toValue: 0,
+        duration: 450,
+        easing: Easing.out(Easing.cubic),
+        useNativeDriver: true
+      }),
+      Animated.timing(o, {
+        toValue: 1,
+        duration: 350,
+        useNativeDriver: true
+      })
+    ]).start();
+  }, []);
 
+  return (
+    <Animated.View style={{ transform: [{ translateY: t }], opacity: o }}>
+      {children}
+    </Animated.View>
+  );
+};
+export function SpringPop ({ children }: { children: ReactNode }) {
+  const s = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    Animated.spring(s, {
+      toValue: 1,
+      friction: 5,
+      tension: 120,
+      useNativeDriver: true
+    }).start();
+  }, []);
+  return <Animated.View style={{ transform: [{ scale: s }] }}>{children}</Animated.View>;
+  
+}
+// On feedback
+export function PressScale({ children, onPress }: { children: ReactNode; onPress?: () => void }) {
+  const s = useRef(new Animated.Value(1)).current;
+
+  const down = () => Animated.spring(s, { toValue: 0.95, useNativeDriver: true }).start();
+  const up = () => Animated.spring(s, { toValue: 1,friction: 6, useNativeDriver: true }).start();
+  return (
+    <Pressable onPressIn={down} onPressOut={up} onPress={onPress}>
+      <Animated.View style={{ transform: [{ scale: s }] }}>{children}</Animated.View>
+    </Pressable>
+  );
+
+}
 const styles = StyleSheet.create({
   welcomeTxt: {
     paddingTop: 50,
@@ -273,5 +326,4 @@ const styles = StyleSheet.create({
     textAlign: "center",
     zIndex: 1,
   },
- 
 });
