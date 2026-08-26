@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import { useState,useRef,useEffect, ReactNode } from 'react';
-import { StyleSheet, Text, View,TextInput, Button,TouchableOpacity, Image,SafeAreaView,ScrollView, Animated,ViewStyle,StyleProp, Pressable} from 'react-native';
+import { StyleSheet, Text, View,TextInput, Button,TouchableOpacity, Image,SafeAreaView,ScrollView, Animated,ViewStyle,StyleProp, Pressable, ImageSourcePropType} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
@@ -95,6 +95,7 @@ function ViewDetails({ navigation,route }: ViewDetailsProps){
   const NameGet = route.params.NameSend;
   const SurnameGet = route.params.SurnameSend;
   const [selectedValue, setSelectedValue] = useState('0');
+  const [ImageBlock,setImage] = useState<ImageSourcePropType | undefined>(undefined);
   
   return(
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
@@ -136,6 +137,32 @@ function ViewDetails({ navigation,route }: ViewDetailsProps){
               <Text style={styles.radioLabel} >HTML & CSS</Text>
           </View>
         </View>
+      </View>
+      <View style = {{flex:1}}>
+        <Text style = {{fontWeight: 'bold', flex: 0, padding:30,
+          justifyContent: "center",textAlign: "center", alignItems: "center"}}>
+            Generate Chosen Language Image 
+        </Text>
+        <Button title = "Generate"
+          onPress={() => {
+
+          switch(selectedValue){
+            case "1":
+              setImage(require('./image/react-native.png'));
+              break;
+            case "2":
+              setImage(require('./image/kotlin.png'));
+              break;
+            
+            case "3":
+              setImage(require('./image/html-css.png'));
+              break;
+            default:
+              setImage(undefined);
+              
+          }
+          }}
+        />
       </View>
 
     </View>
@@ -216,7 +243,7 @@ export function SpringPop ({ children }: { children: ReactNode }) {
   
 }
 // On feedback
-export function PressScale({ children, onPress }: { children: ReactNode; onPress?: () => void }) {
+export function PressScale({ children, onPress }: { children: ReactNode; onPress: () => void }) {
   const s = useRef(new Animated.Value(1)).current;
 
   const down = () => Animated.spring(s, { toValue: 0.95, useNativeDriver: true }).start();
