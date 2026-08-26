@@ -148,13 +148,13 @@ function ViewDetails({ navigation,route }: ViewDetailsProps){
 
           switch(selectedValue){
             case "1":
-              setImage(require('./image/react-native.png'));
+              setImage(require('./assets/Images/react-native.png'));
               break;
             case "2":
-              setImage(require('./image/kotlin.png'));
+              setImage(require('./assets/Images/kotlin.png'));
               break;
             case "3":
-              setImage(require('./image/html-css.png'));
+              setImage(require('./assets/Images/html-css.png'));
               break;
             default:
               setImage(undefined);
