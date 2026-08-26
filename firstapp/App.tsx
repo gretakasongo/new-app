@@ -153,7 +153,6 @@ function ViewDetails({ navigation,route }: ViewDetailsProps){
             case "2":
               setImage(require('./image/kotlin.png'));
               break;
-            
             case "3":
               setImage(require('./image/html-css.png'));
               break;
@@ -353,4 +352,12 @@ const styles = StyleSheet.create({
     textAlign: "center",
     zIndex: 1,
   },
+  viewImage: {
+    width: 350,
+    height: 350,
+    alignContent:"center"
+  },
+  container: {
+    flex:0
+  }
 });
