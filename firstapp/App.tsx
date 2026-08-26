@@ -162,8 +162,10 @@ function ViewDetails({ navigation,route }: ViewDetailsProps){
           }
           }}
         />
+        <View style = {styles.container}>
+          <Image source={ImageBlock} style= {styles.viewImage} />
+        </View>
       </View>
-
     </View>
   );
 }
@@ -358,6 +360,8 @@ const styles = StyleSheet.create({
     alignContent:"center"
   },
   container: {
-    flex:0
+    flex:0,
+    justifyContent: 'center',
+    alignItems: "center"
   }
 });
