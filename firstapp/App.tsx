@@ -1,6 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import { useState,useRef,useEffect, ReactNode } from 'react';
-import { StyleSheet, Text, View,TextInput, Button,TouchableOpacity, Image,SafeAreaView,ScrollView, Animated,ViewStyle,StyleProp, Pressable, ImageSourcePropType} from 'react-native';
+import { StyleSheet, Text, View,TextInput, Button,TouchableOpacity, Image,SafeAreaView,ScrollView, Animated,ViewStyle,StyleProp, Pressable, 
+  ImageSourcePropType} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
@@ -15,12 +16,14 @@ import {Easing} from 'react-native';
       NameSend: string;
       SurnameSend: string;
     };
+    ListSkills: undefined;
   };
 
   const Stack = createNativeStackNavigator<RootStackParamList>();
 
   type MainScreenProps = NativeStackScreenProps<RootStackParamList, 'Home'>;
   type ViewDetailsProps = NativeStackScreenProps<RootStackParamList, 'View'>;
+  type ListSkillsProps = NativeStackScreenProps<RootStackParamList, 'ListSkills'>;
   
   export default function App() {
     return(
@@ -28,6 +31,7 @@ import {Easing} from 'react-native';
         <Stack.Navigator>
           <Stack.Screen name="Home" component={MainScreen} />
           <Stack.Screen name="View" component={ViewDetails} />
+          <Stack.Screen name="ListSkills" component={ListSkills} />
         </Stack.Navigator>
       </NavigationContainer>
     );
@@ -94,8 +98,19 @@ function ViewDetails({ navigation,route }: ViewDetailsProps){
   
   const NameGet = route.params.NameSend;
   const SurnameGet = route.params.SurnameSend;
+  // const [selectedValue, setSelectedValue] = useState('0');
+  // const [ImageBlock,setImage] = useState<ImageSourcePropType | undefined>(undefined);
   const [selectedValue, setSelectedValue] = useState('0');
+  const [iSelected, setInValue] = useState(0);
   const [ImageBlock,setImage] = useState<ImageSourcePropType | undefined>(undefined);
+  const [blockArray] = useState<ImageSourcePropType[]>([
+    undefined,
+    require('./assets/Images/react-native.png'),
+    require('./assets/Images/kotlin.png'),
+    require('./assets/Images/html-css.png'),
+  ]);
+
+  
   
   return(
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
@@ -145,8 +160,9 @@ function ViewDetails({ navigation,route }: ViewDetailsProps){
         </Text>
         <Button title = "Generate"
           onPress={() => {
+            setInValue(Number(selectedValue));
 
-          switch(selectedValue){
+          /*switch(selectedValue){
             case "1":
               setImage(require('./assets/Images/react-native.png'));
               break;
@@ -159,15 +175,63 @@ function ViewDetails({ navigation,route }: ViewDetailsProps){
             default:
               setImage(undefined);
               
-          }
-          }}
-        />
+          }*/
+          }}/>
         <View style = {styles.container}>
-          <Image source={ImageBlock} style= {styles.viewImage} />
+          <Image source={blockArray[iSelected]} style={styles.viewImage} />
         </View>
       </View>
     </View>
   );
+};
+function ListSkills({navigation, route}: ListSkillsProps){
+  const [txtSkill, setTxtSkill] = useState('');
+  const [skills] = useState<String[]>([]);
+
+  const renderSkills = () => {
+    const arrOutput = [];
+    for (let i = 0; i < skills.length; i++) {
+      arrOutput.push(
+        <Text key={i} style={styles.skillText} >
+          {skills[i]}
+        </Text>
+      );
+    }
+    return arrOutput;
+  }
+
+  return(
+    <View style={styles.appContainer}>
+      <view>
+       <SafeAreaView>
+         <ScrollView>
+           <View style={styles.mainImg}>
+             <Image style={styles.bannerImg} 
+             source={require('./assets/Images/banner.jpg')} />
+            </View>
+            <Text style={styles.welcomeTxt}>List Your Skills</Text>
+            <view style={styles.inputContainer}>
+              <TextInput 
+                style={styles.textInput}
+                placeholder="Enter your skills"
+                onChangeText={(newText: string) => setTxtSkill(newText)}
+              />
+              <Button title="Add Skill" 
+               onPress={() => {
+                skills.push(txtSkill);
+                 setTxtSkill("");
+               }}
+              />
+
+            </view>
+            <view style={styles.skillContainer}>
+              {renderSkills()}
+            </view>
+          </ScrollView>
+       </SafeAreaView>
+      </view>
+    </View>
+  )
 }
 
 function isEmpty(value: any){
@@ -363,5 +427,40 @@ const styles = StyleSheet.create({
     flex:0,
     justifyContent: 'center',
     alignItems: "center"
+  },
+  bannerImg: {
+    height: 350,
+    alignContent: "center",
+  },
+  inputContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 25,
+    borderBottomWidth: 1,
+    borderBottomColor: '#7d7d7d',
+  },
+  textInput: {
+    borderWidth: 1,
+    borderColor: '#7d7d7d',
+    width: '70%',
+    margin: 7,
+    padding: 5,
+  },
+  appContainer: {
+    flex: 1,
+    padding: 50,
+    paddingHorizontal: 15,
+  },
+  skillContainer: {
+    flex: 5,
+  },
+  skillText: {
+    fontSize: 15,
+    marginVertical: 5,
+    borderBottomWidth: 1,
+    borderBottomColor: '#7d7d7d',
+    paddingBottom: 5,
   }
 });
