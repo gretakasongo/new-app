@@ -5,12 +5,28 @@ import { StyleSheet, Text, View,TextInput, Button,TouchableOpacity, Image,SafeAr
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import { MaterialTopTabScreenProps } from '@react-navigation/material-top-tabs';
 import {RadioButton} from 'react-native-paper'
 import {Easing} from 'react-native';
+  
 
+type TabParamList = {
+  Home: undefined;
+  ViewDetails: {
+    NameSend: string;
+    SurnameSend: string;
+  };
+  ListSkills: undefined;
+  };
 
+  const Tab= createMaterialTopTabNavigator<TabParamList>();
 
-  type RootStackParamList = {
+  type MainScreenProps = MaterialTopTabScreenProps<TabParamList, 'Home'>;
+  type ViewDetailsProps = MaterialTopTabScreenProps<TabParamList, 'ViewDetails'>;
+  type ListSkillsProps = MaterialTopTabScreenProps<TabParamList, 'ListSkills'>;
+
+  /*type RootStackParamList = {
     Home: undefined,
     View: {
       NameSend: string;
@@ -23,16 +39,16 @@ import {Easing} from 'react-native';
 
   type MainScreenProps = NativeStackScreenProps<RootStackParamList, 'Home'>;
   type ViewDetailsProps = NativeStackScreenProps<RootStackParamList, 'View'>;
-  type ListSkillsProps = NativeStackScreenProps<RootStackParamList, 'ListSkills'>;
+  type ListSkillsProps = NativeStackScreenProps<RootStackParamList, 'ListSkills'>; */
   
   export default function App() {
     return(
       <NavigationContainer>
-        <Stack.Navigator>
-          <Stack.Screen name="Home" component={MainScreen} />
-          <Stack.Screen name="View" component={ViewDetails} />
-          <Stack.Screen name="ListSkills" component={ListSkills} />
-        </Stack.Navigator>
+        <Tab.Navigator screenOptions={{ tabBarStyle: { marginTop: 30,},}}>
+          <Tab.Screen name="Home" component={MainScreen} />
+          <Tab.Screen name="ViewDetails" component={ViewDetails} />
+          <Tab.Screen name="ListSkills" component={ListSkills} />
+        </Tab.Navigator>
       </NavigationContainer>
     );
   }
@@ -72,7 +88,7 @@ function MainScreen({ navigation }: MainScreenProps) {
       style={styles.customButton}
       onPress={() => { 
         if(isEmpty(Name) ==(false) && isEmpty(Surname) ==(false)){
-        navigation.navigate('View', {
+        navigation.navigate('ViewDetails', {
           NameSend: Name,
           SurnameSend: Surname,
         });
@@ -96,8 +112,11 @@ function MainScreen({ navigation }: MainScreenProps) {
   
 function ViewDetails({ navigation,route }: ViewDetailsProps){
   
-  const NameGet = route.params.NameSend;
-  const SurnameGet = route.params.SurnameSend;
+  //const NameGet = route.params.NameSend;
+  //const SurnameGet = route.params.SurnameSend;
+  const NameGet = route.params?.NameSend;
+  const SurnameGet = route.params?.SurnameSend;
+
   // const [selectedValue, setSelectedValue] = useState('0');
   // const [ImageBlock,setImage] = useState<ImageSourcePropType | undefined>(undefined);
   const [selectedValue, setSelectedValue] = useState('0');
@@ -202,15 +221,15 @@ function ListSkills({navigation, route}: ListSkillsProps){
 
   return(
     <View style={styles.appContainer}>
-      <view>
+      <View>
        <SafeAreaView>
          <ScrollView>
            <View style={styles.mainImg}>
              <Image style={styles.bannerImg} 
-             source={require('./assets/Images/banner.jpg')} />
+             source={require('./assets/Images/Banner.jpg')} />
             </View>
             <Text style={styles.welcomeTxt}>List Your Skills</Text>
-            <view style={styles.inputContainer}>
+            <View style={styles.inputContainer}>
               <TextInput 
                 style={styles.textInput}
                 placeholder="Enter your skills"
@@ -223,13 +242,13 @@ function ListSkills({navigation, route}: ListSkillsProps){
                }}
               />
 
-            </view>
-            <view style={styles.skillContainer}>
+            </View>
+            <View style={styles.skillContainer}>
               {renderSkills()}
-            </view>
+            </View>
           </ScrollView>
        </SafeAreaView>
-      </view>
+      </View>
     </View>
   )
 }
@@ -462,5 +481,6 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: '#7d7d7d',
     paddingBottom: 5,
-  }
+  },
+
 });
