@@ -448,28 +448,28 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
   bannerImg: {
-    height: 350,
+    height: 170,
+    width: "100%",
     alignContent: "center",
   },
   inputContainer: {
-    flex: 1,
     flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
     marginBottom: 25,
-    borderBottomWidth: 1,
-    borderBottomColor: '#7d7d7d',
+    marginHorizontal: 20,
   },
   textInput: {
+    flex: 1,
+    height: 50,
     borderWidth: 1,
     borderColor: '#7d7d7d',
-    width: '70%',
-    margin: 7,
-    padding: 5,
+    borderRadius: 10,
+    paddingHorizontal: 15,
+    fontSize: 16,
   },
   appContainer: {
     flex: 1,
-    padding: 50,
+    paddingTop: 20,
     paddingHorizontal: 15,
   },
   skillContainer: {
