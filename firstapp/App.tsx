@@ -205,19 +205,31 @@ function ViewDetails({ navigation,route }: ViewDetailsProps){
 };
 function ListSkills({navigation, route}: ListSkillsProps){
   const [txtSkill, setTxtSkill] = useState('');
-  const [skills] = useState<String[]>([]);
+  const [skills, setSkills] = useState<String[]>([]);
 
   const renderSkills = () => {
     const arrOutput = [];
     for (let i = 0; i < skills.length; i++) {
       arrOutput.push(
-        <Text key={i} style={styles.skillText} >
-          {skills[i]}
-        </Text>
+        <View key={i} style={styles.skillRow}>
+          <Text style={styles.skillText}>
+            {skills[i]}
+          </Text>
+
+          <TouchableOpacity
+            style={styles.deleteButton}
+            onPress={() => {
+              const newSkills = skills.filter((_, index) => index !== i);
+              setSkills(newSkills);
+            }} 
+          >
+            <Text style={styles.deleteButtonText}>Delete</Text>
+          </TouchableOpacity>
+        </View>
       );
     }
     return arrOutput;
-  }
+  };
 
   return(
     <View style={styles.appContainer}>
@@ -235,9 +247,10 @@ function ListSkills({navigation, route}: ListSkillsProps){
                 placeholder="Enter your skills"
                 onChangeText={(newText: string) => setTxtSkill(newText)}
               />
-              <Button title="Add Skill" 
+              <Button 
+               title="Add Skill" 
                onPress={() => {
-                skills.push(txtSkill);
+                setSkills([...skills, txtSkill]);
                  setTxtSkill("");
                }}
               />
@@ -482,5 +495,20 @@ const styles = StyleSheet.create({
     borderBottomColor: '#7d7d7d',
     paddingBottom: 5,
   },
-
+  skillRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginVertical: 5,
+  },
+  deleteButton: {
+    backgroundColor: '#111111',
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    borderRadius: 8,
+  },
+  deleteButtonText: {
+    color: '#ffffff',
+    fontWeight: 'bold',
+  },
 });
